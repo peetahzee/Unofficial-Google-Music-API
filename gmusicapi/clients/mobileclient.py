@@ -44,6 +44,9 @@ class Mobileclient(_Base):
 
         return True
 
+    def set_authtoken(self, authtoken):
+      return self.session.set_authtoken(authtoken)
+
     #TODO expose max/page-results, updated_after, etc for list operations
 
     def get_all_songs(self, incremental=False, include_deleted=False):

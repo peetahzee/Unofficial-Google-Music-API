@@ -126,6 +126,26 @@ class Webclient(_Base):
 
         return self.is_authenticated
 
+    def set_authtoken(self, authtoken, *args, **Kwargs):
+        """
+        Skips login with plaintext email and password, and set
+        authtoken obtained from outside gmusicapi manually.
+
+        :param authoekn: authtoken from Google
+        """
+
+        super(Webclient, self).login()
+
+        self._authtoken = authtoken
+        self.is_authenticated = True
+
+        try:
+            webclient.Init.perform(self, True)
+        except CallFailure:
+            self.logout()
+
+        return self.is_authenticated
+
     def _send_with_auth(self, req_kwargs, desired_auth, rsession):
         if desired_auth.sso:
             req_kwargs.setdefault('headers', {})
