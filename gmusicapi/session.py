@@ -174,9 +174,9 @@ class Mobileclient(Webclient):
         return success
 
     def set_authtoken(self, authtoken, *args, **kwargs):
+        success = super(Mobileclient, self).set_authtoken(authtoken, *args, **kwargs);
         self._rsession.cookies = cookielib.CookieJar()
-
-        return super(Mobileclient, self).set_authtoken(authtoken, *args, **kwargs);
+        return success
 
 class Musicmanager(_Base):
     def __init__(self, *args, **kwargs):
