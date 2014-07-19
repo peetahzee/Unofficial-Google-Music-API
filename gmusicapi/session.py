@@ -126,7 +126,7 @@ class Webclient(_Base):
 
         return self.is_authenticated
 
-    def set_authtoken(self, authtoken, *args, **Kwargs):
+    def set_authtoken(self, authtoken, *args, **kwargs):
         """
         Skips login with plaintext email and password, and set
         authtoken obtained from outside gmusicapi manually.
@@ -173,6 +173,10 @@ class Mobileclient(Webclient):
 
         return success
 
+    def set_authtoken(self, authtoken, *args, **kwargs):
+        self._rsession.cookies = cookielib.CookieJar()
+
+        return super(Mobileclient, self).set_authtoken(authtoken, *args, **kwargs);
 
 class Musicmanager(_Base):
     def __init__(self, *args, **kwargs):
