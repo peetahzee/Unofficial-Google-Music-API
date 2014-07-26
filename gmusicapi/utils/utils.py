@@ -41,7 +41,6 @@ cpp_type_to_python = dict(
     for cpp in cpplist
 )
 
-log_filepath = os.path.join(my_appdirs.user_log_dir, 'gmusicapi.log')
 printed_log_start_message = False  # global, set in config_debug_logging
 
 # matches a mac address in GM form, eg
@@ -77,31 +76,11 @@ class DynamicClientLogger(object):
 
         logger = logging.getLogger(self.caller_name)
 
-        if per_client_logging:
-            # search upwards for a client instance
-            for frame_rec in inspect.getouterframes(inspect.currentframe()):
-                frame = frame_rec[0]
-
-                try:
-                    if 'self' in frame.f_locals:
-                        f_self = frame.f_locals['self']
-
-                        # can't import and check against classes; that causes an import cycle
-                        if ((f_self is not None and
-                             f_self.__module__.startswith('gmusicapi.clients') and
-                             f_self.__class__.__name__ in ('Musicmanager', 'Webclient',
-                                                           'Mobileclient'))):
-                            logger = f_self.logger
-                            break
-                finally:
-                    del frame  # avoid circular references
-
-            else:
-                # log to root logger.
-                # should this be stronger? There's no default root logger set up.
-                stack = traceback.extract_stack()
-                logger.info('could not locate client caller in stack:\n%s',
-                            '\n'.join(traceback.format_list(stack)))
+        # log to root logger.
+        # should this be stronger? There's no default root logger set up.
+        stack = traceback.extract_stack()
+        logger.info('could not locate client caller in stack:\n%s',
+                    '\n'.join(traceback.format_list(stack)))
 
         return getattr(logger, name)
 
@@ -319,13 +298,7 @@ def configure_debug_log_handlers(logger):
 
     logger.setLevel(logging.DEBUG)
 
-    logging_to_file = True
-    try:
-        make_sure_path_exists(os.path.dirname(log_filepath), 0o700)
-        debug_handler = logging.FileHandler(log_filepath)
-    except OSError:
-        logging_to_file = False
-        debug_handler = logging.StreamHandler()
+    debug_handler = logging.StreamHandler()
 
     debug_handler.setLevel(logging.DEBUG)
 
@@ -339,8 +312,6 @@ def configure_debug_log_handlers(logger):
         #print out startup message without verbose formatting
         logger.info("!-- begin debug log --!")
         logger.info("version: " + __version__)
-        if logging_to_file:
-            logger.info("logging to: " + log_filepath)
 
         printed_log_start_message = True
 

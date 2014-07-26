@@ -15,8 +15,9 @@ from gmusicapi.exceptions import (
 from gmusicapi.utils import utils
 
 import requests
+import logging
 
-log = utils.DynamicClientLogger(__name__)
+log = logging
 
 _auth_names = ('xt', 'sso', 'oauth')
 
