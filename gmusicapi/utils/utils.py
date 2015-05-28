@@ -41,7 +41,6 @@ cpp_type_to_python = dict(
     for cpp in cpplist
 )
 
-log_filepath = os.path.join(my_appdirs.user_log_dir, 'gmusicapi.log')
 printed_log_start_message = False  # global, set in config_debug_logging
 
 # matches a mac address in GM form, eg
