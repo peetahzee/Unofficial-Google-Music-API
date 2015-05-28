@@ -9,7 +9,7 @@ __license__ = 'BSD 3-Clause'
 __title__ = 'gmusicapi'
 
 # appease flake8: the imports are purposeful
-(__version__, Webclient, Musicmanager, CallFailure)
+(__version__, Webclient, CallFailure)
 
 
 class Api(object):
