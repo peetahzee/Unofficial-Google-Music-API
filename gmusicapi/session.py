@@ -88,12 +88,6 @@ class _Base(object):
 
         return res
 
-    def set_authtoken(self, authtoken, param, param1):
-        self._authtoken = authtoken
-        self.is_authenticated = True
-        return self.is_authenticated
-
-
 class Webclient(_Base):
     def __init__(self, *args, **kwargs):
         super(Webclient, self).__init__(*args, **kwargs)
@@ -203,7 +197,7 @@ class Mobileclient(_Base):
         return True
 
     def set_authtoken(self, authtoken, *args, **kwargs):
-        success = super(Mobileclient, self).set_authtoken(authtoken, *args, **kwargs);
+        success = self.set_authtoken(authtoken, *args, **kwargs);
         self._rsession.cookies = cookielib.CookieJar()
         return success
 
