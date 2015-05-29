@@ -88,6 +88,11 @@ class _Base(object):
 
         return res
 
+    def set_authtoken(self, authtoken, param, param1):
+        self._authtoken = authtoken
+        self.is_authenticated = True
+        return self.is_authenticated
+
 
 class Webclient(_Base):
     def __init__(self, *args, **kwargs):
