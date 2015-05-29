@@ -88,24 +88,24 @@ class _Base(object):
 
         return res
 
-    def set_authtoken(self, authtoken, *args, **kwargs):
-        """
-        Skips login with plaintext email and password, and set
-        authtoken obtained from outside gmusicapi manually.
-        :param authoekn: authtoken from Google
-        """
-
-        #self.login()
-
-        self._authtoken = authtoken
-        self.is_authenticated = True
-
-        try:
-            webclient.Init.perform(self, True)
-        except CallFailure:
-            self.logout()
-
-        return self.is_authenticated
+    # def set_authtoken(self, authtoken, *args, **kwargs):
+    #     """
+    #     Skips login with plaintext email and password, and set
+    #     authtoken obtained from outside gmusicapi manually.
+    #     :param authoekn: authtoken from Google
+    #     """
+    #
+    #     #self.login()
+    #
+    #     self._authtoken = authtoken
+    #     self.is_authenticated = True
+    #
+    #     try:
+    #         webclient.Init.perform(self, True)
+    #     except CallFailure:
+    #         self.logout()
+    #
+    #     return self.is_authenticated
 
 class Webclient(_Base):
     def __init__(self, *args, **kwargs):
@@ -216,9 +216,10 @@ class Mobileclient(_Base):
         return True
 
     def set_authtoken(self, authtoken, *args, **kwargs):
-        success = super(Mobileclient, self).set_authtoken(authtoken, *args, **kwargs)
+        self._authtoken = authtoken;
+        # success = super(Mobileclient, self).set_authtoken(authtoken, *args, **kwargs)
         self._rsession.cookies = cookielib.CookieJar()
-        return success
+        return True
 
     def _send_with_auth(self, req_kwargs, desired_auth, rsession):
         if desired_auth.oauth:
