@@ -95,7 +95,7 @@ class _Base(object):
         :param authoekn: authtoken from Google
         """
 
-        self.login()
+        #self.login()
 
         self._authtoken = authtoken
         self.is_authenticated = True
