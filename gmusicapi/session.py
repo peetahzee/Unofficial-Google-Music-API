@@ -218,6 +218,7 @@ class Mobileclient(_Base):
     def set_authtoken(self, authtoken, *args, **kwargs):
         self._authtoken = authtoken;
         # success = super(Mobileclient, self).set_authtoken(authtoken, *args, **kwargs)
+        self.is_authenticated = True
         self._rsession.cookies = cookielib.CookieJar()
         return True
 
